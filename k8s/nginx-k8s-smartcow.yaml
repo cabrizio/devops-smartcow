@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: python-k8s-smartcow
+  namespace: smartcow
+spec:
+  rules:
+    - host: backend-smartcow.dev
+      http:
+        paths:
+        - path: /stats
+          backend:
+            serviceName: python-k8s-smartcow
+            servicePort: server
+    - host: frontend-smartcow.dev
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: node-k8s-smartcow
+            servicePort: server

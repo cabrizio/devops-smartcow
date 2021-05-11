@@ -1,0 +1,54 @@
+version: "3.5"
+
+services:
+
+##Backend Python
+  backend:
+    container_name: python-docker-smartcow
+    image: python-docker-smartcow:latest
+    ports:
+      - 5000:5000
+    networks:
+      - dev-network
+    volumes:
+      - tmp:/tmp
+    restart: always
+
+##Frontend NodeJs
+  frontend:
+    container_name: node-docker-smartcow
+    image: node-docker-smartcow:latest
+    build:
+      context: .
+      dockerfile: sys-stats/Dockerfile.frontend
+    ports:
+      - 3000:3000
+    networks:
+      - dev-network
+    volumes:
+      - tmp:/tmp
+    restart: always
+
+##NGINX
+
+  nginx:
+    container_name: nginx-smartcow
+    build:
+      context: ./
+      dockerfile: nginx/nginx.dockerfile
+    working_dir: /var/www
+    ports:
+      - 8080:8080
+      - 8081:8081
+    networks:
+      - dev-network
+
+
+##Development Network
+networks:
+  dev-network:
+    driver: bridge
+
+# tmp volume is used to share files between containers (if needed)
+volumes:
+  tmp:

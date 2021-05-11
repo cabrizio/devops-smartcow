@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-k8s-smartcow
+  namespace: smartcow
+spec:
+  selector:
+    matchLabels:
+      app: node-k8s-smartcow
+  template:
+    metadata:
+      labels:
+        app: node-k8s-smartcow
+    spec:
+      containers:
+      - name: node-k8s-smartcow
+        image: cabrizio/node-docker-smartcow
+        resources:
+          requests:
+            memory: 200Mi
+            cpu: 150m
+          limits:
+            cpu: 300m
+        ports:
+          - name: http
+            containerPort: 3000
+            protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: smartcow
+  name: node-k8s-smartcow
+spec:
+  selector:
+    app: node-k8s-smartcow
+  ports:
+    - name: server
+      port: 3000

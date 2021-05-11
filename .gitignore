@@ -1,0 +1,3 @@
+terraform-eks/.terraform
+terraform-eks/.tfstate*
+terraform-eks/.*
