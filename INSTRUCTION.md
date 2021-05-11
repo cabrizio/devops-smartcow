@@ -22,7 +22,8 @@ I have picked the version nodejs 14.x (pretty much the recommended), and as per 
 
 
 ## Docker
-###BackEnd
+
+### BackEnd
 
 As first step I have created dedicate Dockerfile with standard parameters and as base OS centos:7, and a base suite of packages such as:
  - gcc
@@ -37,7 +38,7 @@ I used a simple and basic format, in order to keep it clear and clean, also to m
 
 The docker-run will execute the  ```CMD [ "python3", "app.py" ]```
 
-###FrontEnd
+### FrontEnd
 
 As first step I have created dedicate Dockerfile with standard parameters and as base OS centos:7, and a base suite of packages such as:
  - gcc
@@ -53,7 +54,7 @@ I used a simple and basic format, in order to keep it clear and clean, also to m
 The docker-run will execute the  ```CMD [ "npm", "start" ]```, also all the time that we build the img the ```RUN npm run-script build``` will be executed.
 
 
-##Docker Compose
+## Docker Compose
 As final step everything has been wrapped up into a docker compose, in order to facilitate the spin up of all the dependencies, as per request the docker-compose start
 a nginx instance too, and it does reverse proxy exposing port 8080 for the frontend and 8081 for the backend.
 To execute the docker-compose run ```docker-compose build && docker-compose up -d```.
@@ -63,7 +64,8 @@ The nginx will be listening on 0.0.0.0:8080 and 0.0.0.0:8081, you can explore it
 
 To stop the env ```docker-compose stop && docker-compose rm -a```
 
-##K8s
+## K8s
+
 I have created a simple list of yaml files in order to deploy the apps into minikube or any k8s cluster, the image are being 
 pull from my personal docker-hub (public available).
 All the yaml configuration files are under the k8s/ folder, and this is the sequence of cmds to use:
